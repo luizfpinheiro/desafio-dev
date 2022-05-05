@@ -20,12 +20,12 @@ class CNAB:
                     self.transacoes.append(
                         {
                             'tipo': transacao.get_tipo(),
-                            'data': transacao.get_data(),
+                            'dt_cadastro': transacao.get_data(),
                             'valor': transacao.get_valor(),
                             'cpf': transacao.get_cpf(),
                             'cartao': transacao.get_cartao_usado(),
                             'hora': transacao.get_hora(),
-                            'nome_representante_loja': transacao.get_nome_representante_loja(),
+                            'nome_representante': transacao.get_nome_representante_loja(),
                             'nome_loja': transacao.get_nome_loja(),
                         }
                     )

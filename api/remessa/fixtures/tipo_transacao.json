@@ -1,0 +1,83 @@
+[
+    {
+        "model": "remessa.tipotransacao",
+        "pk": 1,
+        "fields": {
+            "descricao": "Débito",
+            "bo_entrada": "True",
+            "sinal": "+"
+        }
+    },
+    {
+        "model": "remessa.tipotransacao",
+        "pk": 2,
+        "fields": {
+            "descricao": "Boleto",
+            "bo_entrada": "False",
+            "sinal": "-"
+        }
+    },
+    {
+        "model": "remessa.tipotransacao",
+        "pk": 3,
+        "fields": {
+            "descricao": "Financiamento",
+            "bo_entrada": "False",
+            "sinal": "-"
+        }
+    },
+    {
+        "model": "remessa.tipotransacao",
+        "pk": 4,
+        "fields": {
+            "descricao": "Crédito",
+            "bo_entrada": "True",
+            "sinal": "+"
+        }
+    },
+    {
+        "model": "remessa.tipotransacao",
+        "pk": 5,
+        "fields": {
+            "descricao": "Recebimento Empréstimo",
+            "bo_entrada": "True",
+            "sinal": "+"
+        }
+    },
+    {
+        "model": "remessa.tipotransacao",
+        "pk": 6,
+        "fields": {
+            "descricao": "Vendas",
+            "bo_entrada": "True",
+            "sinal": "+"
+        }
+    },
+    {
+        "model": "remessa.tipotransacao",
+        "pk": 7,
+        "fields": {
+            "descricao": "Recebimento TED",
+            "bo_entrada": "True",
+            "sinal": "+"
+        }
+    },
+    {
+        "model": "remessa.tipotransacao",
+        "pk": 8,
+        "fields": {
+            "descricao": "Recebimento DOC",
+            "bo_entrada": "True",
+            "sinal": "+"
+        }
+    },
+    {
+        "model": "remessa.tipotransacao",
+        "pk": 9,
+        "fields": {
+            "descricao": "Aluguel",
+            "bo_entrada": "False",
+            "sinal": "-"
+        }
+    }
+]

@@ -1,4 +1,5 @@
 from datetime import datetime
+from django.db.models import Sum
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.forms.models import model_to_dict
@@ -31,22 +32,36 @@ def importar_remessa(request):
                     id=transacao["tipo"])
                 transacao["tipo"] = tipo_transacao
 
+                if not tipo_transacao.bo_entrada:
+                    transacao["valor"] = -transacao["valor"]
+
                 Transacao.objects.create(**transacao)
 
         return HttpResponse(remessa.transacoes)
+
 
 @require_http_methods(["GET", "OPTIONS"])
 def get_transacoes(request):
     """ View utilizada para listar transacoes guardadas na base de dados."""
 
     response = []
+
     if request.method == 'GET':
 
-        queryset = Transacao.objects.all()
-        for item in queryset:
-            data = model_to_dict(item)
-            data["valor"] = str(data["valor"])
+        saldo_por_loja = Transacao.objects.values(
+            'nome_loja').annotate(Sum('valor'))
 
-            response.append(data)
+        for item in saldo_por_loja:
+            nome_loja = item["nome_loja"]
+
+            transacoes = Transacao.objects.filter(nome_loja=nome_loja).values(
+                'id', 'tipo__descricao', 'valor', 'cpf', 'cartao', 'nome_representante', 'nome_loja'
+            )
+
+            response.append({
+                "nome_loja": nome_loja,
+                "saldo": "{:.2f}".format(item["valor__sum"]),
+                "transacoes": [t for t in transacoes]
+            })
 
         return JsonResponse(response, safe=False)

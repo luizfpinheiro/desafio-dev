@@ -1,0 +1,36 @@
+version: "3"
+services:
+  db:
+    image: postgres:10.20
+    container_name: "db_sistema"
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - TZ=GMT-3
+
+  api:
+    container_name: django_api
+    build:
+      context: ./api
+    command: >
+      bash -c "python manage.py migrate
+      && python manage.py loaddata tipo_transacao.json
+      && python manage.py runserver 0.0.0.0:8000"
+
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  vue-ui:
+    container_name: vue_ui
+    build:
+      context: ./client
+    ports:
+      - "8080:8080"
+    volumes:
+       - ./client:/usr/src/app/client
+       - /usr/src/app/client/node_modules

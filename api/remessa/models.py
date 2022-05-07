@@ -9,7 +9,7 @@ class TipoTransacao(models.Model):
 class Transacao(models.Model):
     tipo = models.ForeignKey(TipoTransacao, on_delete=models.CASCADE)
     dt_cadastro = models.DateTimeField(auto_now=True)
-    valor = models.DecimalField(max_digits=50, decimal_places=2)
+    valor = models.FloatField()
     cpf = models.CharField(max_length=11)
     cartao = models.CharField(max_length=12)
     nome_representante = models.CharField(max_length=100)

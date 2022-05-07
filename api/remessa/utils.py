@@ -47,7 +47,7 @@ class Transacao:
         return int(valor) / 100
 
     def get_cpf(self):
-        return self.transacao[20:30]
+        return self.transacao[19:30]
 
     def get_cartao_usado(self):
         return self.transacao[30:42]

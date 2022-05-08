@@ -2,7 +2,6 @@ from datetime import datetime
 from django.db.models import Sum
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
-from django.forms.models import model_to_dict
 
 from remessa.models import Transacao, TipoTransacao
 from .utils import CNAB
@@ -12,8 +11,8 @@ from .utils import CNAB
 def importar_remessa(request):
     """ View utilizada para importacao do arquivo CNAB. Retorna os dados parseados."""
 
-    if request.method == 'POST' and request.FILES['file']:
-        upload = request.FILES['file']
+    if request.method == 'POST' and request.FILES.get('file', None):
+        upload = request.FILES.get('file', None)
 
         remessa = CNAB(arquivo=upload)
         if remessa:
@@ -37,7 +36,9 @@ def importar_remessa(request):
 
                 Transacao.objects.create(**transacao)
 
-        return HttpResponse(remessa.transacoes)
+            return HttpResponse(remessa.transacoes)
+    else:
+        return JsonResponse({ "message": "Necessário upload do arquivo." }, status=400)
 
 
 @require_http_methods(["GET", "OPTIONS"])
